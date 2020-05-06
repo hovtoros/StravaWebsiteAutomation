@@ -6,7 +6,6 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import pages.LoginPage;
-import services.LoginFollowingPageDetector;
 import utils.EventReporter;
 
 import java.nio.file.Paths;

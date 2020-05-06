@@ -2,7 +2,6 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import services.LoginFollowingPageDetector;
 
 import java.util.concurrent.TimeUnit;
 
@@ -12,6 +11,7 @@ public class LoginPage {
     private By passwordField = By.id("password");
     private By loginButton = By.id("login-button");
     private By loginLabel = By.className("mb-0");
+    private By alertMessage = By.className("alert-message");
 
     public LoginPage(WebDriver driver){
         this.driver = driver;
@@ -25,13 +25,20 @@ public class LoginPage {
         driver.findElement(passwordField).sendKeys(password);
 }
 
-    public LoginFollowingPageDetector clickLoginButton(){
+    public UserOnBoardingPage SuccessfulLoginButtonClick(){
         driver.findElement(loginButton).click();
         driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
-        return new LoginFollowingPageDetector(driver);
+        return new UserOnBoardingPage(driver);
     }
 
-    public String GetLoginLabelText () {
+    public String UnsuccessfulLoginButtonClick(){
+        driver.findElement(loginButton).click();
+        return driver.findElement(alertMessage).getText();
+    }
+
+    public String InvalidLoginButtonClick(){
+        driver.findElement(loginButton).click();
         return driver.findElement(loginLabel).getText();
     }
+
 }
