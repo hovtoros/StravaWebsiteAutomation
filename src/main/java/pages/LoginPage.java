@@ -2,8 +2,8 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-
-import java.util.concurrent.TimeUnit;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class LoginPage {
     protected WebDriver driver;
@@ -12,6 +12,7 @@ public class LoginPage {
     private By loginButton = By.id("login-button");
     private By loginLabel = By.className("mb-0");
     private By alertMessage = By.className("alert-message");
+    public String errorMessage = null;
 
     public LoginPage(WebDriver driver){
         this.driver = driver;
@@ -27,13 +28,13 @@ public class LoginPage {
 
     public UserOnBoardingPage SuccessfulLoginButtonClick(){
         driver.findElement(loginButton).click();
-        driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
         return new UserOnBoardingPage(driver);
     }
 
-    public String UnsuccessfulLoginButtonClick(){
+    public void UnsuccessfulLoginButtonClick(){
         driver.findElement(loginButton).click();
-        return driver.findElement(alertMessage).getText();
+        errorMessage =  new WebDriverWait(driver, 3)
+                .until(ExpectedConditions.presenceOfElementLocated(alertMessage)).getText();
     }
 
     public String InvalidLoginButtonClick(){

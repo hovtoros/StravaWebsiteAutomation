@@ -2,22 +2,25 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class UserOnBoardingPage {
     private WebDriver driver;
-    private By userNotificationsCount = By.id("notifications-count");
+    private By userNotificationsButton = By.id("notifications-button");
     private By userName = By.id("athlete-profile");
 
-    public UserOnBoardingPage(WebDriver driver)
-    {
+    public UserOnBoardingPage(WebDriver driver) {
         this.driver = driver;
     }
 
     public String GetAthleteProfileBadgeText() {
-        return driver.findElement(userName).getText();
+        return new WebDriverWait(driver, 5)
+                .until(ExpectedConditions.presenceOfElementLocated(userName)).getText();
     }
 
-    public int GetUserNotificationsCount() {
-        return Integer.parseInt(driver.findElement(userNotificationsCount).getText());
+    public String GetUserNotificationsLabelText() {
+        return new WebDriverWait(driver, 5 )
+                .until(ExpectedConditions.elementToBeClickable(userNotificationsButton)).getText();
     }
 }

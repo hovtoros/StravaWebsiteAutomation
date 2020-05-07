@@ -36,4 +36,9 @@ public class BaseTests {
     {
         driver.quit();
     }
+
+    protected void FillLoginForm(String email, String password){
+        loginPage.setEmail(email);
+        loginPage.setPassword(password);
+    }
 }
