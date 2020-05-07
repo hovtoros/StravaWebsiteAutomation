@@ -41,5 +41,4 @@ public class LoginPage {
         driver.findElement(loginButton).click();
         return driver.findElement(loginLabel).getText();
     }
-
 }

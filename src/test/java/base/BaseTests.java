@@ -1,6 +1,9 @@
 package base;
 
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.Capabilities;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -8,33 +11,35 @@ import org.testng.annotations.BeforeMethod;
 import pages.LoginPage;
 import utils.EventReporter;
 
-import java.nio.file.Paths;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class BaseTests {
     private String websiteLink = "https://www.strava.com/";
-    private EventFiringWebDriver driver;
+    private String dockerHubLink = "http://localhost:4444/wd/hub";
+    private EventFiringWebDriver firefoxDriver;
     protected LoginPage loginPage;
 
+
     @BeforeClass
-    public void setUp()
-    {
-        System.setProperty("webdriver.chrome.driver", Paths.get("resources","chromedriver.exe").toString());
-        driver = new EventFiringWebDriver(new ChromeDriver());
-        driver.register(new EventReporter());
-        driver.manage().window().maximize();
+    public void setUp() throws MalformedURLException {
+        Capabilities firefoxCapabilities = DesiredCapabilities.firefox();
+        WebDriver chrome = new RemoteWebDriver(new URL(dockerHubLink), firefoxCapabilities);
+        firefoxDriver = new EventFiringWebDriver(chrome);
+        firefoxDriver.register(new EventReporter());
+        firefoxDriver.manage().window().maximize();
     }
 
     @BeforeMethod
     public void goLoginPage(){
-        driver.manage().deleteAllCookies();
-        driver.get(websiteLink + "login");
-        loginPage = new LoginPage(driver);
+        firefoxDriver.manage().deleteAllCookies();
+        firefoxDriver.get(websiteLink + "login");
+        loginPage = new LoginPage(firefoxDriver);
     }
 
     @AfterClass
-    public void tearDown()
-    {
-        driver.quit();
+    public void tearDown() {
+        firefoxDriver.quit();
     }
 
     protected void FillLoginForm(String email, String password){
