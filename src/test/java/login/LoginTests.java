@@ -3,7 +3,7 @@ package login;
 import base.BaseTests;
 import constants.LoginFormConstants;
 import org.testng.annotations.Test;
-import pages.UserOnBoardingPage;
+import pages.UserDashboardPage;
 
 import static org.testng.Assert.assertTrue;
 
@@ -11,10 +11,9 @@ public class LoginTests extends BaseTests {
 
     @Test
     public void SuccessfulLoginTest(){
-        FillLoginForm(LoginFormConstants.validEmail, LoginFormConstants.validPassword);
-        UserOnBoardingPage userOnBoardingPage = loginPage.SuccessfulLoginButtonClick();
-        assertTrue(userOnBoardingPage.GetAthleteProfileBadgeText().contains("Hovhannes Torosyan"));
-        assertTrue(userOnBoardingPage.GetUserNotificationsLabelText().contains("Notifications"));
+        UserDashboardPage userDashboardPage = LoginSuccessfully();
+        assertTrue(userDashboardPage.GetAthleteProfileBadgeText().contains("Hovhannes Torosyan"));
+        assertTrue(userDashboardPage.GetUserNotificationsLabelText().contains("Noftifications"));
     }
 
     @Test

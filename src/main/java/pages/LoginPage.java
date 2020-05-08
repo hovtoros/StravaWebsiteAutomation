@@ -6,7 +6,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class LoginPage {
-    protected WebDriver driver;
+    private WebDriver driver;
     private By emailField = By.id("email");
     private By passwordField = By.id("password");
     private By loginButton = By.id("login-button");
@@ -26,9 +26,9 @@ public class LoginPage {
         driver.findElement(passwordField).sendKeys(password);
 }
 
-    public UserOnBoardingPage SuccessfulLoginButtonClick(){
+    public UserDashboardPage SuccessfulLoginButtonClick(){
         driver.findElement(loginButton).click();
-        return new UserOnBoardingPage(driver);
+        return new UserDashboardPage(driver);
     }
 
     public void UnsuccessfulLoginButtonClick(){
