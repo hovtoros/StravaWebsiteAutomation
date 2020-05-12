@@ -1,4 +1,4 @@
-package login;
+package profile;
 
 import base.BaseTests;
 import constants.UserProfileConstants;

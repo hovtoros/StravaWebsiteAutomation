@@ -13,6 +13,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import pages.HomePage;
 import pages.LoginPage;
 import pages.UserDashboardPage;
 import pages.UserProfilePage;
@@ -31,8 +32,7 @@ public class BaseTests {
     private String websiteLink = "https://www.strava.com/";
     private String dockerHubLink = "http://localhost:4444/wd/hub";
     private EventFiringWebDriver firefoxDriver;
-    protected LoginPage loginPage;
-
+    protected HomePage homePage;
 
     @BeforeClass
     public void setUp() throws MalformedURLException {
@@ -44,11 +44,12 @@ public class BaseTests {
     }
 
     @BeforeMethod
-    public void goLoginPage(){
+    public void goHomePage(){
         firefoxDriver.manage().deleteAllCookies();
-        firefoxDriver.get(websiteLink + "login");
-        loginPage = new LoginPage(firefoxDriver);
+        firefoxDriver.get(websiteLink);
+        homePage = new HomePage(firefoxDriver);
     }
+
 
     @AfterClass
     public void tearDown() {
@@ -86,14 +87,15 @@ public class BaseTests {
         }
     }
 
-    protected void FillLoginForm(String email, String password){
+    protected LoginPage GoLoginPageAndFillForm(String email, String password){
+        var loginPage = homePage.ClickLoginReference();
         loginPage.setEmail(email);
         loginPage.setPassword(password);
+        return loginPage;
     }
 
-    protected UserDashboardPage LoginSuccessfully()
-    {
-        FillLoginForm(LoginFormConstants.validEmail, LoginFormConstants.validPassword);
+    protected UserDashboardPage LoginSuccessfully(){
+        var loginPage = GoLoginPageAndFillForm(LoginFormConstants.validEmail, LoginFormConstants.validPassword);
         return loginPage.SuccessfulLoginButtonClick();
     }
 
