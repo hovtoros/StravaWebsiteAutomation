@@ -16,7 +16,6 @@ import org.testng.annotations.BeforeMethod;
 import pages.HomePage;
 import pages.LoginPage;
 import pages.UserDashboardPage;
-import pages.UserProfilePage;
 import utils.EventReporter;
 
 import java.io.File;
@@ -49,7 +48,6 @@ public class BaseTests {
         firefoxDriver.get(websiteLink);
         homePage = new HomePage(firefoxDriver);
     }
-
 
     @AfterClass
     public void tearDown() {
@@ -91,12 +89,13 @@ public class BaseTests {
         var loginPage = homePage.ClickLoginReference();
         loginPage.setEmail(email);
         loginPage.setPassword(password);
+
         return loginPage;
     }
 
     protected UserDashboardPage LoginSuccessfully(){
-        var loginPage = GoLoginPageAndFillForm(LoginFormConstants.validEmail, LoginFormConstants.validPassword);
-        return loginPage.SuccessfulLoginButtonClick();
-    }
+        var loginPage = GoLoginPageAndFillForm(LoginFormConstants.ValidEmail, LoginFormConstants.ValidPassword);
 
+        return loginPage.ClickSuccessfulLoginButton();
+    }
 }

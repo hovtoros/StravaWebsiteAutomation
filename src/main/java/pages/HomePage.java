@@ -13,6 +13,7 @@ public class HomePage {
 
     public LoginPage ClickLoginReference(){
         driver.findElement(loginReference).click();
+
         return new LoginPage(driver);
     }
 }

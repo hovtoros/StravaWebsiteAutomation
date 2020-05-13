@@ -2,8 +2,6 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -30,18 +28,20 @@ public class LoginPage {
         wait.until(ExpectedConditions.presenceOfElementLocated(passwordField)).sendKeys(password);
 }
 
-    public UserDashboardPage SuccessfulLoginButtonClick(){
+    public UserDashboardPage ClickSuccessfulLoginButton(){
         driver.findElement(loginButton).click();
+
         return new UserDashboardPage(driver);
     }
 
-    public void UnsuccessfulLoginButtonClick(){
+    public void ClickUnsuccessfulLoginButton(){
         driver.findElement(loginButton).click();
         errorMessage =  wait.until(ExpectedConditions.presenceOfElementLocated(alertMessage)).getText();
     }
 
-    public String InvalidLoginButtonClick(){
+    public String ClickInvalidLoginButton(){
         driver.findElement(loginButton).click();
+
         return driver.findElement(loginLabel).getText();
     }
 }
